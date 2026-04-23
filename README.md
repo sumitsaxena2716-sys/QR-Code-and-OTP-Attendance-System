@@ -4,6 +4,7 @@ A **Smart Attendance System** built using **Python (Flask), HTML, CSS, JavaScrip
 
 This system uses **QR Code scanning + OTP verification (backup)** to mark attendance efficiently and securely.
 
+---
 
 ## 🚀 Features
 
@@ -13,7 +14,8 @@ This system uses **QR Code scanning + OTP verification (backup)** to mark attend
 ✅ OTP backup system (for failure cases)  
 ✅ Automatic Excel report generation  
 ✅ Monthly attendance sheet auto-create  
-✅ Color highlighting in Excel  
+
+### 🎨 Excel Highlighting
 - 🟢 Present (Green)  
 - 🔵 Late (Blue)  
 - 🔴 Absent (Red)  
@@ -22,6 +24,7 @@ This system uses **QR Code scanning + OTP verification (backup)** to mark attend
 ✅ Dashboard (Daily + Monthly analytics)  
 ✅ Student image display on success  
 
+---
 
 ## 🧠 Working Logic
 
@@ -32,33 +35,33 @@ This system uses **QR Code scanning + OTP verification (backup)** to mark attend
 | After 9:15 AM | Teacher Permission Required |
 | No Scan | Absent |
 
+---
+
 ## 📂 Folder Structure
 
-
-
-QR-Code-and-OTP-Attendance-System
+```
+QR-Code-and-OTP-Attendance-System/
 │
-├── app.py # Main Flask Backend
-├── students.xlsx # Student Database
-├── April_Attendance.xlsx # Auto-generated Monthly File
+├── app.py                    # Main Flask Backend
+├── students.xlsx             # Student Database
+├── April_Attendance.xlsx     # Auto-generated Monthly File
 │
-├── templates/ # Frontend HTML Pages
-│ ├── index.html # Home Page
-│ ├── scanner.html # QR Scanner Page
-│ ├── success.html # Attendance Result Page
-│ ├── login.html # Teacher Login
-│ ├── dashboard.html # Dashboard View
+├── templates/                # Frontend HTML Pages
+│   ├── index.html
+│   ├── scanner.html
+│   ├── success.html
+│   ├── login.html
+│   ├── dashboard.html
 │
-├── static/ # JS / CSS Files
-│ └── login.js # Login Logic
+├── static/                   # JS Files
+│   └── login.js
 │
-├── images/ # Student Images
-│ ├── 101.jpg
-│ ├── 102.jpg
-│ └── 
+├── images/                   # Student Images
+│   ├── 101.jpg
+│   ├── 102.jpg
 │
-└── README.md # Project Documentation
-
+└── README.md
+```
 
 ## 🛠️ Technologies Used
 
@@ -69,28 +72,49 @@ QR-Code-and-OTP-Attendance-System
 - OpenPyXL (Excel Automation)
 - SMTP (Email Sending)
 
+---
 
 ## ⚙️ Installation & Setup
 
-1️⃣ Clone Repository
-      git clone https://github.com/your-username/QR-Code-and-OTP-Attendance-System.git
-      cd QR-Code-and-OTP-Attendance-System
+### 1️⃣ Clone Repository
 
-2️⃣ Install Dependencies
-      pip install flask pandas openpyxl qrcode
+git clone https://github.com/sumitsaxena2716/QR-Code-and-OTP-Attendance-System.git
 
-3️⃣ Run Project
-      python app.py
+cd QR-Code-and-OTP-Attendance-System
 
-4️⃣ Open Browser
-      http://127.0.0.1:5000
-    🔐 Teacher Login
-        Username: Admin
-        Password: admin@123
-    📧 Email Setup
 
-In app.py:
-    SENDER_EMAIL = "your_email@gmail.com"
-    APP_PASSWORD = "your_app_password"
+### 2️⃣ Install Dependencies
+
+pip install flask pandas openpyxl qrcode
+
+
+### 3️⃣ Run Project
+
+python app.py
+
+
+### 4️⃣ Open Browser
+
+http://127.0.0.1:5000
+
+
+---
+
+## 🔐 Teacher Login
+
+```
+Username: Admin
+Password: admin@123
+```
+
+---
+
+## 📧 Email Setup
+
+In `app.py`:
+
+```python
+SENDER_EMAIL = "your_email@gmail.com"
+APP_PASSWORD = "your_app_password"
 
 👉 Use Gmail App Password (not normal password)
