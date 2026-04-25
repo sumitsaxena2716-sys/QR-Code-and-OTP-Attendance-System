@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dashboard</title>
+    <style>
+        body{
+            margin:0;
+            font-family:'Segoe UI';
+            background:linear-gradient(135deg,#5f6cff,#7f53ff);
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            min-height:100vh;
+        }
+
+        .card{
+            width:700px;
+            background:white;
+            padding:35px;
+            border-radius:20px;
+            box-shadow:0 10px 30px rgba(0,0,0,.2);
+            text-align:center;
+        }
+
+        h1{
+            margin-bottom:30px;
+        }
+
+        .summary{
+            display:flex;
+            justify-content:space-around;
+            margin:30px 0;
+            gap:20px;
+        }
+
+        .box{
+            flex:1;
+            color:white;
+            padding:20px;
+            border-radius:15px;
+            font-size:30px;
+            font-weight:bold;
+        }
+
+        .green{background:#4CAF50;}
+        .blue{background:#2196F3;}
+        .red{background:#F44336;}
+
+        table{
+            width:100%;
+            border-collapse:collapse;
+            margin-top:20px;
+        }
+
+        th{
+            background:#5f6cff;
+            color:white;
+            padding:14px;
+            font-size:22px;
+        }
+
+        td{
+            border:1px solid #ddd;
+            padding:14px;
+            font-size:18px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="card">
+    <h1>📊 Dashboard</h1>
+
+    <h2>Today Summary</h2>
+
+    <div class="summary">
+        <div class="box green">
+            P<br><span id="p">0</span>
+        </div>
+
+        <div class="box blue">
+            L<br><span id="l">0</span>
+        </div>
+
+        <div class="box red">
+            A<br><span id="a">0</span>
+        </div>
+    </div>
+
+    <h2>Monthly Attendance %</h2>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Attendance %</th>
+            </tr>
+        </thead>
+        <tbody id="monthly"></tbody>
+    </table>
+</div>
+
+<script>
+fetch("/dashboard-data")
+.then(r=>r.json())
+.then(data=>{
+
+    document.getElementById("p").innerText = data.today.present;
+    document.getElementById("l").innerText = data.today.late;
+    document.getElementById("a").innerText = data.today.absent;
+
+    let html="";
+
+    data.monthly.forEach(x=>{
+        html += `
+            <tr>
+                <td>${x.Name}</td>
+                <td>${x.Percent}%</td>
+            </tr>
+        `;
+    });
+
+    document.getElementById("monthly").innerHTML = html;
+});
+</script>
+
+</body>
+</html>

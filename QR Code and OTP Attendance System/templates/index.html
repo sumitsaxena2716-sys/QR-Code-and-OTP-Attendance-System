@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Smart Attendance</title>
+
+<style>
+body {
+    margin:0;
+    font-family:'Segoe UI';
+    background:linear-gradient(135deg,#5f6cff,#7f53ff);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    height:100vh;
+}
+
+.card {
+    background:white;
+    padding:30px;
+    border-radius:15px;
+    width:350px;
+    text-align:center;
+}
+
+input {
+    width:90%;
+    padding:12px;
+    margin-bottom:10px;
+}
+
+button {
+    width:100%;
+    padding:12px;
+    margin-top:10px;
+    background:#5f6cff;
+    color:white;
+    border:none;
+    border-radius:8px;
+    transition:0.3s;
+    cursor:pointer;
+}
+
+button:hover {
+    transform:scale(1.05);
+}
+</style>
+</head>
+
+<body>
+
+<div class="card">
+<h2>Smart Attendance</h2>
+
+<input id="roll" placeholder="Enter Roll">
+
+<button onclick="sendQR()">Send QR</button>
+<button onclick="go()">Scan</button>
+<button onclick="openDashboard()">📊 Dashboard</button>
+
+</div>
+
+<script>
+function sendQR(){
+    let roll=document.getElementById("roll").value;
+
+    fetch("/generate-qr",{
+        method:"POST",
+        headers:{"Content-Type":"application/json"},
+        body:JSON.stringify({roll:roll})
+    })
+    .then(()=>alert("QR Sent"));
+}
+
+function go(){
+    let roll=document.getElementById("roll").value;
+    localStorage.setItem("roll",roll);
+    window.location.href="/scanner";
+}
+
+function openDashboard(){
+    window.location.href="/dashboard";
+}
+</script>
+
+</body>
+</html>

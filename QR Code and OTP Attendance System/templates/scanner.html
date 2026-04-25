@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Scan QR</title>
+
+<script src="https://unpkg.com/html5-qrcode@2.3.8"></script>
+
+<style>
+body {
+    margin: 0;
+    font-family: 'Segoe UI';
+    background: linear-gradient(135deg, #5f6cff, #7f53ff);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+/* Card same as index */
+.card {
+    background: white;
+    padding: 30px;
+    border-radius: 15px;
+    width: 360px;
+    text-align: center;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+}
+
+/* Title */
+h2 {
+    margin-bottom: 10px;
+}
+
+/* Camera container */
+#reader {
+    width: 260px;
+    margin: 20px auto;   /* CENTER */
+}
+
+/* Status text */
+.status {
+    margin-top: 10px;
+    font-size: 14px;
+    color: #333;
+}
+</style>
+</head>
+
+<body>
+
+<div class="card">
+
+    <h2>📷 Scan QR Code</h2>
+
+    <!-- CAMERA -->
+    <div id="reader"></div>
+
+    <div class="status" id="status">Waiting for scan...</div>
+
+</div>
+
+<script>
+let roll = localStorage.getItem("roll");
+let scanned = false;
+
+const scanner = new Html5Qrcode("reader");
+
+scanner.start(
+    { facingMode: "environment" },
+    { fps: 10, qrbox: 200 },
+
+    async (decodedText) => {
+
+        if(scanned) return;
+
+        document.getElementById("status").innerText = "Processing...";
+
+        let res = await fetch("/mark-attendance", {
+            method: "POST",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify({
+                roll: roll,
+                qr: decodedText
+            })
+        });
+
+        let data = await res.json();
+
+        // 🔴 TEACHER PERMISSION
+        if(data.status === "permission"){
+            let pass = prompt("Enter Teacher Password:");
+
+            if(pass === "admin123"){
+
+                let res2 = await fetch("/mark-attendance", {
+                    method: "POST",
+                    headers: {"Content-Type": "application/json"},
+                    body: JSON.stringify({
+                        roll: roll,
+                        qr: decodedText,
+                        teacher: true
+                    })
+                });
+
+                let d = await res2.json();
+
+                localStorage.setItem("result", JSON.stringify(d));
+                scanner.stop();
+                window.location.href = "/success";
+
+            } else {
+                alert("❌ Permission Denied");
+                document.getElementById("status").innerText = "Permission Denied";
+            }
+            return;
+        }
+
+        // ❌ ERROR
+        if(data.status === "error"){
+            document.getElementById("status").innerText = data.msg;
+            return;
+        }
+
+        // ✅ SUCCESS
+        if(data.status === "success"){
+            scanned = true;
+            localStorage.setItem("result", JSON.stringify(data));
+            scanner.stop();
+            window.location.href = "/success";
+        }
+    }
+);
+</script>
+
+</body>
+</html>

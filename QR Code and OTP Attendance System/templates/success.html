@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Success</title>
+
+<style>
+body {
+    margin:0;
+    font-family:'Segoe UI';
+    background:linear-gradient(135deg,#5f6cff,#7f53ff);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    height:100vh;
+}
+
+.card {
+    background:white;
+    padding:30px;
+    border-radius:15px;
+    width:380px;
+    text-align:center;
+    box-shadow:0 10px 25px rgba(0,0,0,0.2);
+}
+
+.details {
+    text-align:left;
+    margin-top:15px;
+}
+
+img {
+    margin-top:10px;
+    border-radius:10px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="card">
+
+    <h2>✅ Attendance Marked</h2>
+
+    <div class="details">
+        <p><b>Name:</b> <span id="name"></span></p>
+        <p><b>Roll:</b> <span id="roll"></span></p>
+        <p><b>Time:</b> <span id="time"></span></p>
+        <p><b>Status:</b> <span id="status"></span></p>
+    </div>
+
+    <img id="img" width="120">
+
+</div>
+
+<script>
+let d = JSON.parse(localStorage.getItem("result"));
+
+if(d){
+    document.getElementById("name").innerText = d.name;
+    document.getElementById("roll").innerText = d.roll;
+    document.getElementById("time").innerText = d.time;
+    document.getElementById("status").innerText = d.att;
+
+    document.getElementById("img").src = "/images/" + d.roll + ".jpg";
+}
+
+// 🔁 Auto back
+setTimeout(()=>{window.location="/"},5000);
+</script>
+
+</body>
+</html>
