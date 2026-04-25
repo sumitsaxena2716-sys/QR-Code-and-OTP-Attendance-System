@@ -78,7 +78,7 @@ QR-Code-and-OTP-Attendance-System/
 
 ### 1️⃣ Clone Repository
 
-git clone https://github.com/sumitsaxena2716/QR-Code-and-OTP-Attendance-System.git
+git clone [https://github.com/sumitsaxena2716/QR-Code-and-OTP-Attendance-System.git](https://github.com/sumitsaxena2716-sys/QR-Code-and-OTP-Attendance-System.git)
 
 cd QR-Code-and-OTP-Attendance-System
 
